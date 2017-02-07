@@ -6,6 +6,7 @@ GitHub Repository: [crstnbr/Helpers.jl](http://julialang.org/)
 module Helpers
 
 include("math.jl")
+include("hdf5.jl")
 
 """
     setGLOBAL_RNG(rng)
@@ -31,5 +32,17 @@ function swap_rows!(X, i, j)
     end
 end
 export swap_rows!
+
+"""
+    swap_cols!(X, i, j)
+
+Swaps cols `i` and `j` of `X`.
+"""
+function swap_cols!(X, i, j)
+    for k = 1:size(X,2)
+        X[k,i], X[k,j] = X[k,j], X[k,i]
+    end
+end
+export swap_cols!
 
 end # module
