@@ -47,6 +47,12 @@ function compare(A::AbstractArray, B::AbstractArray)
   @printf("mean absdiff: %.1e\n", mean(absdiff(A,B)))
   @printf("max reldiff: %.1e\n", maximum(reldiff(A,B)))
   @printf("mean reldiff: %.1e\n", mean(reldiff(A,B)))
+
+  r = reldiff(A,B)
+  r[find(x->abs(x)<1e-14,absdiff(A,B))] = 0.
+  @printf("effective max reldiff: %.1e\n", maximum(r))
+  @printf("effective mean reldiff: %.1e\n", mean(r))
+
   return isapprox(A,B)
 end
 export compare
