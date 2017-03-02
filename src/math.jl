@@ -26,6 +26,21 @@ export reldiff
 
 
 """
+    effreldiff(A, B, threshold=1e-14)
+
+Same as `reldiff(A,B)` but with all elements set to zero where corresponding element of
+`absdiff(A,B)` is smaller than `threshold`. This is useful in avoiding artificially large
+relative errors.
+"""
+function effreldiff(A::AbstractArray, B::AbstractArray, threshold::Float64=1e-14)
+  r = reldiff(A,B)
+  r[find(x->abs(x)<threshold,absdiff(A,B))] = 0.
+  return r
+end
+export effreldiff
+
+
+"""
     absdiff(A, B)
 
 Difference of absolute values of `A` and `B`.
@@ -48,8 +63,7 @@ function compare(A::AbstractArray, B::AbstractArray)
   @printf("max reldiff: %.1e\n", maximum(reldiff(A,B)))
   @printf("mean reldiff: %.1e\n", mean(reldiff(A,B)))
 
-  r = reldiff(A,B)
-  r[find(x->abs(x)<1e-14,absdiff(A,B))] = 0.
+  r = effreldiff(A,B)
   @printf("effective max reldiff: %.1e\n", maximum(r))
   @printf("effective mean reldiff: %.1e\n", mean(r))
 
