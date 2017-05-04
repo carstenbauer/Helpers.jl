@@ -7,6 +7,7 @@ module Helpers
 
 include("math.jl")
 include("hdf5.jl")
+include("filesystem.jl")
 
 """
     setGLOBAL_RNG(rng)
