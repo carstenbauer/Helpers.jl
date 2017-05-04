@@ -148,3 +148,4 @@ function meshgrid{T}(vx::AbstractVector{T}, vy::AbstractVector{T},
     oo = ones(Int, o)
     (vx[om, :, oo], vy[:, on, oo], vz[om, on, :])
 end
+export meshgrid
