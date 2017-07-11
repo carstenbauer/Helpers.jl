@@ -20,7 +20,7 @@ Relative difference of absolute values of `A` and `B` defined as
 ``
 """
 function reldiff(A::AbstractArray, B::AbstractArray)
-  return 2*abs(A-B)./abs(A+B)
+  return 2*abs.(A-B)./abs.(A+B)
 end
 export reldiff
 
@@ -34,7 +34,7 @@ relative errors.
 """
 function effreldiff(A::AbstractArray, B::AbstractArray, threshold::Float64=1e-14)
   r = reldiff(A,B)
-  r[find(x->abs(x)<threshold,absdiff(A,B))] = 0.
+  r[find(x->abs.(x)<threshold,absdiff(A,B))] = 0.
   return r
 end
 export effreldiff
@@ -46,7 +46,7 @@ export effreldiff
 Difference of absolute values of `A` and `B`.
 """
 function absdiff(A::AbstractArray, B::AbstractArray)
-  return abs(A-B)
+  return abs.(A-B)
 end
 export absdiff
 
