@@ -50,7 +50,7 @@ function h5repack(src::String, trg::String)
     @static if is_windows()
         readstring(`h5repack.exe $src $trg`)
     end
-    @static if is_windows()
+    @static if is_linux()
         readstring(`h5repack $src $trg`)
     end
 end
