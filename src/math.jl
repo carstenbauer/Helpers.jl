@@ -149,3 +149,24 @@ function meshgrid{T}(vx::AbstractVector{T}, vy::AbstractVector{T},
     (vx[om, :, oo], vy[:, on, oo], vz[om, on, :])
 end
 export meshgrid
+
+
+using PyCall
+@pyimport scipy.sparse as pysparse
+"""
+    sparsejl2py(X)
+
+Convert julia sparse matrix to python (scipy csc) sparse matrix.
+"""
+sparsejl2py(S::SparseMatrixCSC) =
+    pysparse.csc_matrix((S.nzval, S.rowval .- 1, S.colptr .- 1), shape=size(S))
+export sparsejl2py
+
+"""
+    sparsepy2jl(X)
+
+Convert python sparse matrix to julia sparse matrix.
+"""
+sparsepy2jl(S::PyObject) =
+    SparseMatrixCSC(S[:m], S[:n], S[:indptr] .+ 1, S[:indices] .+ 1, S[:data])
+export sparsepy2jl
