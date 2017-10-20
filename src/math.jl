@@ -6,7 +6,7 @@ The sparsity is defined as number of zero-valued elements divided by
 total number of elements.
 """
 function sparsity(A::AbstractArray)
-  length(findin(A,0))/length(A)
+  countnz(A)/length(A)
 end
 export sparsity
 
