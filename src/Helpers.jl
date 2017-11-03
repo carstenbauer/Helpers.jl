@@ -84,5 +84,5 @@ function upgrade(build=false)
     if build
         Pkg.build();
     end
-    precompile_packages())
+    precompile_packages()
 export upgrade
