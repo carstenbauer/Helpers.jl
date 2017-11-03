@@ -48,3 +48,31 @@ end
 export swap_cols!
 
 end # module
+
+
+"""
+    precompile_packages()
+
+Trigger precompilation of all packages.
+"""
+function precompile_packages()
+    for pkg in keys(Pkg.installed())
+        try
+            info("Compiling: $pkg")
+            eval(Expr(:toplevel, Expr(:using, Symbol(pkg))))
+        catch err
+            warn("Unable to precompile: $pkg")
+            warn(err)
+        end
+    end
+end
+export precompile_packages
+
+
+"""
+    upgrade()
+
+Upgrade all installed Julia packages (i.e. update, build and precompile).
+"""
+upgrade() = (Pkg.update(); Pkg.build(); precompile_packages())
+export upgrade
