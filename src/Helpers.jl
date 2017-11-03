@@ -56,7 +56,12 @@ end # module
 Trigger precompilation of all packages.
 """
 function precompile_packages()
+    excl = ["Helpers", "ErrorAnalysis", "Yoni"]
     for pkg in keys(Pkg.installed())
+        if pkg in excl
+            continue
+        end
+
         try
             info("Compiling: $pkg")
             eval(Expr(:toplevel, Expr(:using, Symbol(pkg))))
@@ -70,9 +75,14 @@ export precompile_packages
 
 
 """
-    upgrade()
+    upgrade(build=false)
 
-Upgrade all installed Julia packages (i.e. update, build and precompile).
+Upgrade all installed Julia packages (i.e. update, [build], and precompile).
 """
-upgrade() = (Pkg.update(); Pkg.build(); precompile_packages())
+function upgrade(build=false)
+    Pkg.update();
+    if build
+        Pkg.build();
+    end
+    precompile_packages())
 export upgrade
