@@ -7,7 +7,7 @@ Dumps the group/data tree of a HDF5 file.
 """
 h5dump(f::HDF5File, space::String="      ") = h5dump_recursive(f["/"], space)
 
-function h5dump(f::HDF5File, space::String="      ")
+function h5dump(filename::String, space::String="      ")
   HDF5.h5open(filename, "r+") do f
     h5dump(f,space)
   end
