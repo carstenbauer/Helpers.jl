@@ -61,3 +61,75 @@ function h5repack(filename::String)
     mv("tmp.h5",filename,remove_destination=true)
 end
 export h5repack
+
+
+"""
+  saverng(filename [, rng::MersenneTwister; group="GLOBAL_RNG"])
+  saverng(HDF5.HDF5File [, rng::MersenneTwister; group="GLOBAL_RNG"])
+
+Saves the current state of Julia's random generator (`Base.Random.GLOBAL_RNG`) to HDF5.
+"""
+function saverng(f::HDF5.HDF5File, rng::MersenneTwister=Base.Random.GLOBAL_RNG; group::String="GLOBAL_RNG")
+  g = endswith(group, "/") ? group : group * "/"
+  try
+    if HDF5.exists(f, g)
+      HDF5.o_delete(f, g)
+    end
+
+    f[g*"idx"] = rng.idx
+    f[g*"state_val"] = rng.state.val
+    f[g*"vals"] = rng.vals
+    f[g*"seed"] = rng.seed
+  catch e
+    error("Error while saving RNG state: ", e)
+  end
+  nothing
+end
+function saverng(filename::String, rng::MersenneTwister=Base.Random.GLOBAL_RNG; group::String="GLOBAL_RNG")
+  mode = isfile(filename) ? "r+" : "w"
+  HDF5.h5open(filename, mode) do f
+    saverng(f, rng; group=group)
+  end
+end
+export saverng
+
+"""
+  loadrng(filename [; group="GLOBAL_RNG"]) -> MersenneTwister
+  loadrng(f::HDF5.HDF5File [; group="GLOBAL_RNG"]) -> MersenneTwister
+
+Loads a random generator from HDF5.
+"""
+function loadrng(f::HDF5.HDF5File; group::String="GLOBAL_RNG")::MersenneTwister
+  rng = MersenneTwister(0)
+  g = endswith(group, "/") ? group : group * "/"
+  try
+    rng.idx = read(f[g*"idx"])
+    rng.state = Base.dSFMT.DSFMT_state(read(f[g*"state_val"]))
+    rng.vals = read(f[g*"vals"])
+    rng.seed = read(f[g*"seed"])
+  catch e
+    error("Error while restoring RNG state: ", e)
+  end
+  return rng
+end
+function loadrng(filename::String; group::String="GLOBAL_RNG")
+  HDF5.h5open(filename, "r") do f
+    loadrng(f; group=group)
+  end
+end
+export loadrng
+
+"""
+  restorerng!(filename [; group="GLOBAL_RNG"]) -> Void
+  restorerng!(f::HDF5.HDF5File [; group="GLOBAL_RNG"]) -> Void
+
+Restores a state of Julia's random generator (`Base.Random.GLOBAL_RNG`) from HDF5.
+"""
+function restorerng!(filename::String; group::String="GLOBAL_RNG")
+  HDF5.h5open(filename, "r") do f
+    restorerng!(f; group=group)
+  end
+  nothing
+end
+restorerng!(f::HDF5.HDF5File; group::String="GLOBAL_RNG") = setGLOBAL_RNG(loadrng(f; group=group))
+export restorerng!
