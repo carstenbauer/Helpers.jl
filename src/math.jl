@@ -151,15 +151,21 @@ end
 export meshgrid
 
 
-using PyCall
-@pyimport scipy.sparse as pysparse
+import PyCall: PyObject
+PYCALL_LOADED = false
+
 """
     sparsejl2py(X)
 
 Convert julia sparse matrix to python (scipy csc) sparse matrix.
 """
-sparsejl2py(S::SparseMatrixCSC) =
-    pysparse.csc_matrix((S.nzval, S.rowval .- 1, S.colptr .- 1), shape=size(S))
+function sparsejl2py(S::SparseMatrixCSC)
+  if !PYCALL_LOADED
+    eval(Expr(:toplevel, Expr(:using, Symbol("PyCall"))))
+    eval(Expr(:toplevel, parse("@pyimport scipy.sparse as pysparse")))
+  end
+  pysparse.csc_matrix((S.nzval, S.rowval .- 1, S.colptr .- 1), shape=size(S))
+end
 export sparsejl2py
 
 """
