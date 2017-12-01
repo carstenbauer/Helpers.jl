@@ -2,12 +2,17 @@ environment:
   matrix:
   - JULIAVERSION: "julialang/bin/winnt/x86/0.6/julia-0.6-latest-win32.exe"
   - JULIAVERSION: "julialang/bin/winnt/x64/0.6/julia-0.6-latest-win64.exe"
-  # - JULIAVERSION: "julianightlies/bin/winnt/x86/julia-latest-win32.exe"
-  # - JULIAVERSION: "julianightlies/bin/winnt/x64/julia-latest-win64.exe"
+  - JULIAVERSION: "julianightlies/bin/winnt/x86/julia-latest-win32.exe"
+  - JULIAVERSION: "julianightlies/bin/winnt/x64/julia-latest-win64.exe"
   # - PYTHON_VERSION: 2.7
   #   MINICONDA: C:\Miniconda
   # - PYTHON_VERSION: 3.4
   #   MINICONDA: C:\Miniconda3
+
+matrix:
+  allow_failures:
+    - JULIAVERSION: "julianightlies/bin/winnt/x86/julia-latest-win32.exe"
+    - JULIAVERSION: "julianightlies/bin/winnt/x64/julia-latest-win64.exe"
 
 init:
   - "ECHO %PYTHON_VERSION% %MINICONDA%"
