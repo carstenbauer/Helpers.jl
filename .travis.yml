@@ -14,7 +14,7 @@ notifications:
 #  - julia -e 'Pkg.clone(pwd()); Pkg.build("Helpers"); Pkg.test("Helpers"; coverage=true)'
 before_install:
   - sudo apt-get -qq update
-  - sudo apt-get install -y hdf5-tools
+  - sudo apt-get install -y hdf5-tools python-numpy python-scipy python-matplotlib
 after_success:
   # push coverage results to Coveralls
   - julia -e 'cd(Pkg.dir("Helpers")); Pkg.add("Coverage"); using Coverage; Coveralls.submit(Coveralls.process_folder())'
