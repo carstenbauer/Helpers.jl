@@ -17,11 +17,11 @@ branches:
     - master
     - /release-.*/
 
-notifications:
-  - provider: Email
-    on_build_success: false
-    on_build_failure: false
-    on_build_status_changed: false
+# notifications:
+#   - provider: Email
+#     on_build_success: false
+#     on_build_failure: false
+#     on_build_status_changed: false
 
 install:
 # Python deps
