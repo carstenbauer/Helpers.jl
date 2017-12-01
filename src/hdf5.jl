@@ -120,16 +120,16 @@ end
 export loadrng
 
 """
-  restorerng!(filename [; group="GLOBAL_RNG"]) -> Void
-  restorerng!(f::HDF5.HDF5File [; group="GLOBAL_RNG"]) -> Void
+  restorerng(filename [; group="GLOBAL_RNG"]) -> Void
+  restorerng(f::HDF5.HDF5File [; group="GLOBAL_RNG"]) -> Void
 
 Restores a state of Julia's random generator (`Base.Random.GLOBAL_RNG`) from HDF5.
 """
-function restorerng!(filename::String; group::String="GLOBAL_RNG")
+function restorerng(filename::String; group::String="GLOBAL_RNG")
   HDF5.h5open(filename, "r") do f
-    restorerng!(f; group=group)
+    restorerng(f; group=group)
   end
   nothing
 end
-restorerng!(f::HDF5.HDF5File; group::String="GLOBAL_RNG") = setGLOBAL_RNG(loadrng(f; group=group))
-export restorerng!
+restorerng(f::HDF5.HDF5File; group::String="GLOBAL_RNG") = setrng(loadrng(f; group=group))
+export restorerng
