@@ -24,28 +24,28 @@ end
 export setrng
 
 """
-    swap_rows!(X, i, j)
+    swaprows!(X, i, j)
 
 Swaps rows `i` and `j` of `X`.
 """
-function swap_rows!(X, i, j)
+function swaprows!(X::AbstractMatrix, i::Integer, j::Integer)
     for k = 1:size(X,2)
         X[i,k], X[j,k] = X[j,k], X[i,k]
     end
 end
-export swap_rows!
+export swaprows!
 
 """
-    swap_cols!(X, i, j)
+    swapcols!(X, i, j)
 
 Swaps cols `i` and `j` of `X`.
 """
-function swap_cols!(X, i, j)
+function swapcols!(X::AbstractMatrix, i::Integer, j::Integer)
     for k = 1:size(X,2)
         X[k,i], X[k,j] = X[k,j], X[k,i]
     end
 end
-export swap_cols!
+export swapcols!
 
 end # module
 
