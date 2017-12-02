@@ -5,19 +5,19 @@ using Base.Test
     M = rand(10,10)
     ci = M[:,3]
     cj = M[:,5]
-    swap_cols!(M,3,5)
+    swapcols!(M,3,5)
     @test M[:,5] == ci
     @test M[:,3] == cj
-    swap_cols!(M,3,5)
+    swapcols!(M,3,5)
     @test M[:,3] == ci
     @test M[:,5] == cj
 
     ri = M[3,:]
     rj = M[5,:]
-    swap_rows!(M,3,5)
+    swaprows!(M,3,5)
     @test M[5,:] == ri
     @test M[3,:] == rj
-    swap_rows!(M,3,5)
+    swaprows!(M,3,5)
     @test M[3,:] == ri
     @test M[5,:] == rj
 end
