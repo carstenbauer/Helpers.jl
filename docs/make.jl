@@ -10,8 +10,8 @@ makedocs(
     format = :html,
     sitename = "Helpers.jl",
     pages = [
-        "index.md",
-        "Page title" => "index.md"
+        "Home" => "index.md",
+        "Functions" => "functions.md"
         # "Subsection" => [
         #     ...
         # ]
