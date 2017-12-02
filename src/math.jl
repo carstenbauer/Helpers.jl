@@ -116,14 +116,14 @@ export docommute
 """
     meshgrid(xvec) = meshgrid(xvec, xvec)
 
-Produces a 2D meshgrid `X,X`` by repeating xvec in y-dimension and xvec in x-dimension.
+Produces a 2D meshgrid `X,X` by repeating xvec in y-dimension and xvec in x-dimension.
 """
 meshgrid(v::AbstractVector) = meshgrid(v, v)
 
 """
     meshgrid(xvec, yvec)
 
-Produces a 2D meshgrid `X,Y`` by repeating xvec in y-dimension and yvec in x-dimension.
+Produces a 2D meshgrid `X,Y` by repeating xvec in y-dimension and yvec in x-dimension.
 """
 function meshgrid{T}(vx::AbstractVector{T}, vy::AbstractVector{T})
     m, n = length(vy), length(vx)
@@ -133,9 +133,9 @@ function meshgrid{T}(vx::AbstractVector{T}, vy::AbstractVector{T})
 end
 
 """
-    meshgrid(xvec, yvec)
+    meshgrid(xvec, yvec, yvec)
 
-Produces a 3D meshgrid `X,Y,Z`` by repeating the input vectors.
+Produces a 3D meshgrid `X,Y,Z` by repeating the input vectors.
 """
 function meshgrid{T}(vx::AbstractVector{T}, vy::AbstractVector{T},
                      vz::AbstractVector{T})
