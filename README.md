@@ -1,9 +1,13 @@
 # Helpers
 
 [![](https://img.shields.io/badge/docs-latest-blue.svg)](https://crstnbr.github.io/Helpers.jl/latest)
-[![Build Status](https://travis-ci.org/crstnbr/Helpers.jl.svg?branch=master&label=Linux+/+macOS)](https://travis-ci.org/crstnbr/Helpers.jl)
-[![Build status](https://ci.appveyor.com/api/projects/status/b7jyi0x4krxthva6/branch/master?svg=true&label=Windows)](https://ci.appveyor.com/project/crstnbr/helpers-jl/branch/master)
-[![codecov.io](http://codecov.io/github/crstnbr/Helpers.jl/coverage.svg?branch=master)](http://codecov.io/github/crstnbr/Helpers.jl?branch=master)
+[![travis][travis-img]](https://travis-ci.org/crstnbr/Helpers.jl)
+[![appveyor][appveyor-img]](https://ci.appveyor.com/project/crstnbr/helpers-jl/branch/master)
+[![codecov][codecov-img]](http://codecov.io/github/crstnbr/Helpers.jl?branch=master)
+
+[travis-img]: https://img.shields.io/travis/crstnbr/Helpers.jl/master.svg?label=Linux+/+macOS
+[appveyor-img]: https://img.shields.io/appveyor/ci/crstnbr/helpers-jl/master.svg?label=Windows
+[codecov-img]: https://img.shields.io/codecov/c/github/crstnbr/Helpers.jl/master.svg?label=codecov
 
 In Julia REPL:
 ```
