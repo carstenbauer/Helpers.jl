@@ -5,7 +5,7 @@ Calculates the sparsity of the given array.
 The sparsity is defined as number of zero-valued elements divided by
 total number of elements.
 """
-function sparsity(A::AbstractArray)
+function sparsity(A::AbstractArray{T}) where T<:Number
   (length(A)-countnz(A))/length(A)
 end
 export sparsity
@@ -19,7 +19,7 @@ Relative difference of absolute values of `A` and `B` defined as
 \\operatorname{reldiff} = 2 \\dfrac{\\operatorname{abs}(A - B)}{\\operatorname{abs}(A+B)}.
 ``
 """
-function reldiff(A::AbstractArray, B::AbstractArray)
+function reldiff(A::AbstractArray{T}, B::AbstractArray{T}) where T<:Number
   return 2*abs.(A-B)./abs.(A+B)
 end
 export reldiff
@@ -32,7 +32,7 @@ Same as `reldiff(A,B)` but with all elements set to zero where corresponding ele
 `absdiff(A,B)` is smaller than `threshold`. This is useful in avoiding artificially large
 relative errors.
 """
-function effreldiff(A::AbstractArray, B::AbstractArray, threshold::Float64=1e-14)
+function effreldiff(A::AbstractArray{T}, B::AbstractArray{T}, threshold::Float64=1e-14)  where T<:Number
   r = reldiff(A,B)
   r[find(x->abs.(x)<threshold,absdiff(A,B))] = 0.
   return r
@@ -45,7 +45,7 @@ export effreldiff
 
 Difference of absolute values of `A` and `B`.
 """
-function absdiff(A::AbstractArray, B::AbstractArray)
+function absdiff(A::AbstractArray{T}, B::AbstractArray{T}) where T<:Number
   return abs.(A-B)
 end
 export absdiff
@@ -57,7 +57,7 @@ export absdiff
 Compares two matrices `A` and `B`, prints out the maximal absolute and relative differences
 and returns a boolean indicating wether `isapprox(A,B)`.
 """
-function compare(A::AbstractArray, B::AbstractArray)
+function compare(A::AbstractArray{T}, B::AbstractArray{T}) where T<:Number
   @printf("max absdiff: %.1e\n", maximum(absdiff(A,B)))
   @printf("mean absdiff: %.1e\n", mean(absdiff(A,B)))
   @printf("max reldiff: %.1e\n", maximum(reldiff(A,B)))
@@ -78,7 +78,7 @@ export compare
 Compares two matrices `A` and `B`, prints out all absolute and relative differences
 and returns a boolean indicating wether `isapprox(A,B)`.
 """
-function compare_full(A::AbstractArray, B::AbstractArray)
+function compare_full(A::AbstractArray{T}, B::AbstractArray{T}) where T
   compare(A,B)
   println("")
   println("absdiff: ")
@@ -97,7 +97,7 @@ export compare_full
 
 Commutator `AB - BA`.
 """
-function comm(A::AbstractArray, B::AbstractArray)
+function comm(A::AbstractArray{T}, B::AbstractArray{T}) where T<:Number
   return A*B - B*A
 end
 export comm
@@ -108,7 +108,7 @@ export comm
 
 Checks if the matrices do (approx.) commute.
 """
-function docommute(A::AbstractArray, B::AbstractArray)
+function docommute(A::AbstractArray{T}, B::AbstractArray{T}) where T<:Number
   return isapprox(comm(A,B),zeros(size(A)...))
 end
 export docommute
@@ -125,7 +125,7 @@ meshgrid(v::AbstractVector) = meshgrid(v, v)
 
 Produces a 2D meshgrid `X,Y` by repeating xvec in y-dimension and yvec in x-dimension.
 """
-function meshgrid{T}(vx::AbstractVector{T}, vy::AbstractVector{T})
+function meshgrid{T}(vx::AbstractVector{T}, vy::AbstractVector{T}) where T
     m, n = length(vy), length(vx)
     vx = reshape(vx, 1, n)
     vy = reshape(vy, m, 1)
@@ -138,7 +138,7 @@ end
 Produces a 3D meshgrid `X,Y,Z` by repeating the input vectors.
 """
 function meshgrid{T}(vx::AbstractVector{T}, vy::AbstractVector{T},
-                     vz::AbstractVector{T})
+                     vz::AbstractVector{T}) where T
     m, n, o = length(vy), length(vx), length(vz)
     vx = reshape(vx, 1, n, 1)
     vy = reshape(vy, m, 1, 1)
