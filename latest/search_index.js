@@ -49,7 +49,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "functions.html#Helpers.absdiff-Tuple{AbstractArray,AbstractArray}",
+    "location": "functions.html#Helpers.absdiff-Union{Tuple{AbstractArray{T,N} where N,AbstractArray{S,N} where N}, Tuple{S}, Tuple{T}} where T<:Number where S<:Number",
     "page": "Functions",
     "title": "Helpers.absdiff",
     "category": "Method",
@@ -57,7 +57,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "functions.html#Helpers.comm-Tuple{AbstractArray,AbstractArray}",
+    "location": "functions.html#Helpers.comm-Union{Tuple{AbstractArray{T,N} where N,AbstractArray{S,N} where N}, Tuple{S}, Tuple{T}} where T<:Number where S<:Number",
     "page": "Functions",
     "title": "Helpers.comm",
     "category": "Method",
@@ -65,7 +65,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "functions.html#Helpers.compare-Tuple{AbstractArray,AbstractArray}",
+    "location": "functions.html#Helpers.compare-Union{Tuple{AbstractArray{T,N} where N,AbstractArray{S,N} where N}, Tuple{S}, Tuple{T}} where T<:Number where S<:Number",
     "page": "Functions",
     "title": "Helpers.compare",
     "category": "Method",
@@ -73,7 +73,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "functions.html#Helpers.compare_full-Tuple{AbstractArray,AbstractArray}",
+    "location": "functions.html#Helpers.compare_full-Union{Tuple{AbstractArray{T,N} where N,AbstractArray{S,N} where N}, Tuple{S}, Tuple{T}} where T<:Number where S<:Number",
     "page": "Functions",
     "title": "Helpers.compare_full",
     "category": "Method",
@@ -81,7 +81,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "functions.html#Helpers.docommute-Tuple{AbstractArray,AbstractArray}",
+    "location": "functions.html#Helpers.docommute-Union{Tuple{AbstractArray{T,N} where N,AbstractArray{S,N} where N}, Tuple{S}, Tuple{T}} where T<:Number where S<:Number",
     "page": "Functions",
     "title": "Helpers.docommute",
     "category": "Method",
@@ -89,10 +89,10 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "functions.html#Helpers.effreldiff",
+    "location": "functions.html#Helpers.effreldiff-Union{Tuple{AbstractArray{T,N} where N,AbstractArray{S,N} where N,Float64}, Tuple{AbstractArray{T,N} where N,AbstractArray{S,N} where N}, Tuple{S}, Tuple{T}} where T<:Number where S<:Number",
     "page": "Functions",
     "title": "Helpers.effreldiff",
-    "category": "Function",
+    "category": "Method",
     "text": "effreldiff(A, B, threshold=1e-14)\n\nSame as reldiff(A,B) but with all elements set to zero where corresponding element of absdiff(A,B) is smaller than threshold. This is useful in avoiding artificially large relative errors.\n\n\n\n"
 },
 
@@ -129,15 +129,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "functions.html#Helpers.meshgrid-Tuple{AbstractArray{T,1} where T}",
-    "page": "Functions",
-    "title": "Helpers.meshgrid",
-    "category": "Method",
-    "text": "meshgrid(xvec) = meshgrid(xvec, xvec)\n\nProduces a 2D meshgrid X,X by repeating xvec in y-dimension and xvec in x-dimension.\n\n\n\n"
-},
-
-{
-    "location": "functions.html#Helpers.meshgrid-Union{Tuple{AbstractArray{T,1},AbstractArray{T,1},AbstractArray{T,1}}, Tuple{T}} where T",
+    "location": "functions.html#Helpers.meshgrid-Union{Tuple{AbstractArray{T,1},AbstractArray{S,1},AbstractArray{R,1}}, Tuple{R}, Tuple{S}, Tuple{T}} where T<:Number where S<:Number where R<:Number",
     "page": "Functions",
     "title": "Helpers.meshgrid",
     "category": "Method",
@@ -145,7 +137,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "functions.html#Helpers.meshgrid-Union{Tuple{AbstractArray{T,1},AbstractArray{T,1}}, Tuple{T}} where T",
+    "location": "functions.html#Helpers.meshgrid-Union{Tuple{AbstractArray{T,1},AbstractArray{S,1}}, Tuple{S}, Tuple{T}} where T<:Number where S<:Number",
     "page": "Functions",
     "title": "Helpers.meshgrid",
     "category": "Method",
@@ -153,7 +145,15 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "functions.html#Helpers.reldiff-Tuple{AbstractArray,AbstractArray}",
+    "location": "functions.html#Helpers.meshgrid-Union{Tuple{AbstractArray{T,1}}, Tuple{T}} where T<:Number",
+    "page": "Functions",
+    "title": "Helpers.meshgrid",
+    "category": "Method",
+    "text": "meshgrid(xvec) = meshgrid(xvec, xvec)\n\nProduces a 2D meshgrid X,X by repeating xvec in y-dimension and xvec in x-dimension.\n\n\n\n"
+},
+
+{
+    "location": "functions.html#Helpers.reldiff-Union{Tuple{AbstractArray{T,N} where N,AbstractArray{S,N} where N}, Tuple{S}, Tuple{T}} where T<:Number where S<:Number",
     "page": "Functions",
     "title": "Helpers.reldiff",
     "category": "Method",
@@ -201,7 +201,7 @@ var documenterSearchIndex = {"docs": [
 },
 
 {
-    "location": "functions.html#Helpers.sparsity-Tuple{AbstractArray}",
+    "location": "functions.html#Helpers.sparsity-Union{Tuple{AbstractArray{T,N} where N}, Tuple{T}} where T<:Number",
     "page": "Functions",
     "title": "Helpers.sparsity",
     "category": "Method",
