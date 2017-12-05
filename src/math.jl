@@ -137,7 +137,7 @@ end
 
 Produces a 3D meshgrid `X,Y,Z` by repeating the input vectors.
 """
-function meshgrid(vx::AbstractVector{T}, vy::AbstractVector{S}, vz::AbstractVector{R}) where T<:Number where S<:Number, R<:Number
+function meshgrid(vx::AbstractVector{T}, vy::AbstractVector{S}, vz::AbstractVector{R}) where T<:Number where S<:Number where R<:Number
     m, n, o = length(vy), length(vx), length(vz)
     vx = reshape(vx, 1, n, 1)
     vy = reshape(vy, m, 1, 1)
