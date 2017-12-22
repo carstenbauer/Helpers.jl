@@ -114,3 +114,16 @@ function install_most_used_pkgs()
     end
 end
 export install_most_used_pkgs
+
+
+"""
+    extension(filepath::AbstractString)
+
+Extracts lowercase file extension from given filepath.
+Extension is defined as "everything after the last dot".
+"""
+function extension(filepath::AbstractString)
+    filename = basename(filepath)
+    return lowercase(filename[end-search(reverse(filename), '.')+2:end])
+end
+export extension

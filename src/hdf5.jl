@@ -1,4 +1,5 @@
 import HDF5
+using JLD
 
 """
     h5dump(filename)
@@ -23,6 +24,19 @@ function h5dump_recursive(g::HDF5.HDF5Group, space::String, level::Int=0)
    end
 end
 export h5dump
+
+"""
+    jlddump(filename)
+
+Dumps the group/data tree of a JLD file.
+"""
+jlddump(f::JLD.JldFile, space::String="      ") = h5dump(f.plain, space)
+function jlddump(filename::String, space::String="      ")
+  JLD.jldopen(filename, "r+") do f
+    jlddump(f,space)
+  end
+end
+export jlddump
 
 """
     h5delete(filename, element)
@@ -133,3 +147,52 @@ function restorerng(filename::String; group::String="GLOBAL_RNG")
 end
 restorerng(f::HDF5.HDF5File; group::String="GLOBAL_RNG") = setrng(loadrng(f; group=group))
 export restorerng
+
+"""
+  jldwrite(filename::AbstractString, name::AbstractString, obj; compress::Bool=false)
+
+"""
+function jldwrite(filename::AbstractString, name::AbstractString, obj; compress::Bool=false)
+  mode = isfile(filename) ? "r+" : "w"
+  jldopen(filename, mode, compress=compress) do f
+    write(f, name, obj)
+  end
+  nothing
+end
+export jldwrite
+
+"""
+  jldread(filename::AbstractString, name::AbstractString)
+  
+"""
+function jldread(filename::AbstractString, name::AbstractString)
+  jldopen(filename) do f
+    return read(f[name])
+  end
+end
+export jldread
+
+
+"""
+  has(filename::AbstractString, name::AbstractString)
+
+Checks wether a JLD/HDF5 file has a dataset with name `name`.
+"""
+function has(filename::AbstractString, name::AbstractString)
+  h5open(filename) do f
+    return HDF5.has(f.plain, name)
+  end
+end
+
+
+"""
+    fileext(filepath::AbstractString)
+
+Extracts lowercase file extension from given filepath.
+Extension is defined as "everything after the last dot".
+"""
+function fileext(filepath::AbstractString)
+    filename = basename(filepath)
+    return lowercase(filename[end-search(reverse(filename), '.')+2:end])
+end
+export fileext
