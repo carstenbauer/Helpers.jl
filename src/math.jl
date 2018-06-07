@@ -150,8 +150,32 @@ end
 export meshgrid
 
 
-import PyCall: PyObject
-PYCALL_LOADED = false
+# import PyCall: PyObject
+# PYCALL_LOADED = false
+
+# """
+#     sparsejl2py(X)
+
+# Convert julia sparse matrix to python (scipy csc) sparse matrix.
+# """
+# function sparsejl2py(S::SparseMatrixCSC)
+#   if !PYCALL_LOADED
+#     eval(Expr(:toplevel, Expr(:using, Symbol("PyCall"))))
+#     eval(Expr(:toplevel, parse("@pyimport scipy.sparse as pysparse")))
+#   end
+#   pysparse.csc_matrix((S.nzval, S.rowval .- 1, S.colptr .- 1), shape=size(S))
+# end
+# export sparsejl2py
+
+# """
+#     sparsepy2jl(X)
+
+# Convert python sparse matrix to julia sparse matrix.
+# """
+# sparsepy2jl(S::PyObject) =
+#     SparseMatrixCSC(S[:m], S[:n], S[:indptr] .+ 1, S[:indices] .+ 1, S[:data])
+# export sparsepy2jl
+
 
 """
     sparsejl2py(X)
@@ -159,19 +183,19 @@ PYCALL_LOADED = false
 Convert julia sparse matrix to python (scipy csc) sparse matrix.
 """
 function sparsejl2py(S::SparseMatrixCSC)
-  if !PYCALL_LOADED
-    eval(Expr(:toplevel, Expr(:using, Symbol("PyCall"))))
-    eval(Expr(:toplevel, parse("@pyimport scipy.sparse as pysparse")))
-  end
+  @eval using PyCall
+  # eval(Expr(:toplevel, Expr(:using, Symbol("PyCall"))))
+  # eval(Expr(:toplevel, parse("@pyimport scipy.sparse as pysparse")))
+  @eval @pyimport scipy.sparse as pysparse
   pysparse.csc_matrix((S.nzval, S.rowval .- 1, S.colptr .- 1), shape=size(S))
 end
 export sparsejl2py
 
 """
-    sparsepy2jl(X)
+    sparsepy2jl(X::PyObject)
 
 Convert python sparse matrix to julia sparse matrix.
 """
-sparsepy2jl(S::PyObject) =
+sparsepy2jl(S) =
     SparseMatrixCSC(S[:m], S[:n], S[:indptr] .+ 1, S[:indices] .+ 1, S[:data])
 export sparsepy2jl
