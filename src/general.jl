@@ -4,10 +4,12 @@
 Replaces current `Random.GLOBAL_RNG` with `rng`.
 """
 function setrng(rng::MersenneTwister)
-  Random.GLOBAL_RNG.idx = rng.idx
+  Random.GLOBAL_RNG.idxI = rng.idxI
+  Random.GLOBAL_RNG.idxF = rng.idxF
   Random.GLOBAL_RNG.state = rng.state
   Random.GLOBAL_RNG.vals = rng.vals
   Random.GLOBAL_RNG.seed = rng.seed
+  Random.GLOBAL_RNG.ints = rng.ints
   nothing
 end
 export setrng
