@@ -5,7 +5,7 @@ GitHub Repository: [crstnbr/Helpers.jl](http://julialang.org/)
 module Helpers
 
 #stdlibs
-using Random, Printf, Statistics
+using Random, Printf, Statistics, SparseArrays
 
 #external pkgs
 import HDF5

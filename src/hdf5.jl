@@ -60,10 +60,10 @@ application.
 """
 function h5repack(src::String, trg::String)
     if src == trg   h5repack(src)  end
-    @static if Sys.is_windows()
+    @static if Sys.iswindows()
         read(`h5repack.exe $src $trg`, String)
     end
-    @static if Sys.is_linux()
+    @static if Sys.islinux()
         read(`h5repack $src $trg`, String)
     end
 end
