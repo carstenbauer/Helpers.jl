@@ -9,8 +9,15 @@
 [appveyor-img]: https://img.shields.io/appveyor/ci/crstnbr/helpers-jl/master.svg?label=Windows
 [codecov-img]: https://img.shields.io/codecov/c/github/crstnbr/Helpers.jl/master.svg?label=codecov
 
-In Julia REPL:
+In Julia v0.6 REPL:
 ```
 Pkg.clone("https://github.com/crstnbr/Helpers.jl")
+using Helpers
+```
+
+In Julia v0.7/v1.x REPL:
+```
+using Pkg
+Pkg.add("https://github.com/crstnbr/Helpers.jl#v0.7")
 using Helpers
 ```
