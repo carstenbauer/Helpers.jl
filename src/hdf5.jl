@@ -87,10 +87,12 @@ function saverng(f::HDF5.HDF5File, rng::MersenneTwister=Random.GLOBAL_RNG; group
       HDF5.o_delete(f, g)
     end
 
-    f[g*"idx"] = rng.idx
+    f[g*"idxF"] = rng.idxF
+    f[g*"idxI"] = rng.idxI
     f[g*"state_val"] = rng.state.val
     f[g*"vals"] = rng.vals
     f[g*"seed"] = rng.seed
+    f[g*"ints"] = rng.ints
   catch e
     error("Error while saving RNG state: ", e)
   end
@@ -114,10 +116,12 @@ function loadrng(f::HDF5.HDF5File; group::String="GLOBAL_RNG")::MersenneTwister
   rng = MersenneTwister(0)
   g = endswith(group, "/") ? group : group * "/"
   try
-    rng.idx = read(f[g*"idx"])
+    rng.idxI = read(f[g*"idxI"])
+    rng.idxF = read(f[g*"idxF"])
     rng.state = Base.dSFMT.DSFMT_state(read(f[g*"state_val"]))
     rng.vals = read(f[g*"vals"])
     rng.seed = read(f[g*"seed"])
+    rng.ints = read(f[g*"ints"])
   catch e
     error("Error while restoring RNG state: ", e)
   end
