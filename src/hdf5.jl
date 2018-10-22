@@ -92,7 +92,7 @@ function saverng(f::HDF5.HDF5File, rng::MersenneTwister=Random.GLOBAL_RNG; group
     f[g*"state_val"] = rng.state.val
     f[g*"vals"] = rng.vals
     f[g*"seed"] = rng.seed
-    f[g*"ints"] = rng.ints
+    f[g*"ints"] = Int.(rng.ints)
   catch e
     error("Error while saving RNG state: ", e)
   end
@@ -121,7 +121,7 @@ function loadrng(f::HDF5.HDF5File; group::String="GLOBAL_RNG")::MersenneTwister
     rng.state = Base.dSFMT.DSFMT_state(read(f[g*"state_val"]))
     rng.vals = read(f[g*"vals"])
     rng.seed = read(f[g*"seed"])
-    rng.ints = read(f[g*"ints"])
+    rng.ints = UInt128.(read(f[g*"ints"]))
   catch e
     error("Error while restoring RNG state: ", e)
   end
