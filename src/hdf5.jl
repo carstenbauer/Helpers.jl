@@ -118,7 +118,7 @@ function loadrng(f::HDF5.HDF5File; group::String="GLOBAL_RNG")::MersenneTwister
   try
     rng.idxI = read(f[g*"idxI"])
     rng.idxF = read(f[g*"idxF"])
-    rng.state = Base.dSFMT.DSFMT_state(read(f[g*"state_val"]))
+    rng.state = Random.DSFMT.DSFMT_state(read(f[g*"state_val"]))
     rng.vals = read(f[g*"vals"])
     rng.seed = read(f[g*"seed"])
     rng.ints = UInt128.(read(f[g*"ints"]))
