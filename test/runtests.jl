@@ -1,5 +1,5 @@
 using Helpers
-using Base.Test
+using Test, SparseArrays
 
 @testset "Generic" begin
     M = rand(10,10)

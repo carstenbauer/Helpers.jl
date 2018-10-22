@@ -1,2 +1,3 @@
-Pkg.add("HDF5")
-# Pkg.add("PyCall")
+# using Pkg
+# Pkg.add("HDF5")
+# # Pkg.add("PyCall")
