@@ -1,5 +1,5 @@
 using Helpers
-using Test, SparseArrays
+using Test, SparseArrays, LinearAlgebra
 
 @testset "Generic" begin
     M = rand(10,10)
