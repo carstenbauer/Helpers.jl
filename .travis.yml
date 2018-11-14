@@ -4,7 +4,7 @@ os:
   - linux
 #  - osx
 julia:
-  - release
+  - 1.0
   - nightly
 matrix:
   allow_failures:
@@ -12,10 +12,7 @@ matrix:
 #    - os: osx
 notifications:
   email: false
-# uncomment the following lines to override the default test script
-#script:
-#  - if [[ -a .git/shallow ]]; then git fetch --unshallow; fi
-#  - julia -e 'Pkg.clone(pwd()); Pkg.build("Helpers"); Pkg.test("Helpers"; coverage=true)'
+
 before_install:
   - sudo apt-get -qq update
   - sudo apt-get install -y hdf5-tools python-numpy python-scipy python-matplotlib
@@ -25,5 +22,5 @@ after_success:
   # push coverage results to Codecov
   - julia -e 'cd(Pkg.dir("Helpers")); Pkg.add("Coverage"); using Coverage; Codecov.submit(Codecov.process_folder())'
   # Documenter
-  - julia -e 'Pkg.add("Documenter")'
+  - julia -e 'using Pkg; Pkg.add("Documenter")'
   - julia -e 'cd(Pkg.dir("Helpers")); include(joinpath("docs", "make.jl"))'

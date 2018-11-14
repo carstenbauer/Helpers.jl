@@ -6,7 +6,7 @@ The sparsity is defined as number of zero-valued elements divided by
 total number of elements.
 """
 function sparsity(A::AbstractArray{T}) where T<:Number
-  (length(A)-countnz(A))/length(A)
+  (length(A)-count(!iszero, A))/length(A)
 end
 export sparsity
 
@@ -34,7 +34,7 @@ relative errors.
 """
 function effreldiff(A::AbstractArray{T}, B::AbstractArray{S}, threshold::Float64=1e-14) where T<:Number where S<:Number
   r = reldiff(A,B)
-  r[find(x->abs.(x)<threshold,absdiff(A,B))] = 0.
+  r[findall(x->abs.(x)<threshold,absdiff(A,B))] .= 0.
   return r
 end
 export effreldiff
@@ -129,7 +129,7 @@ function meshgrid(vx::AbstractVector{T}, vy::AbstractVector{S}) where T<:Number 
     m, n = length(vy), length(vx)
     vx = reshape(vx, 1, n)
     vy = reshape(vy, m, 1)
-    (repmat(vx, m, 1), repmat(vy, 1, n))
+    (repeat(vx, m, 1), repeat(vy, 1, n))
 end
 
 """

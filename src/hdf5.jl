@@ -60,11 +60,11 @@ application.
 """
 function h5repack(src::String, trg::String)
     if src == trg   h5repack(src)  end
-    @static if is_windows()
-        readstring(`h5repack.exe $src $trg`)
+    @static if Sys.iswindows()
+        read(`h5repack.exe $src $trg`, String)
     end
-    @static if is_linux()
-        readstring(`h5repack $src $trg`)
+    @static if Sys.islinux()
+        read(`h5repack $src $trg`, String)
     end
 end
 function h5repack(filename::String)
@@ -78,25 +78,27 @@ export h5repack
   saverng(filename [, rng::MersenneTwister; group="GLOBAL_RNG"])
   saverng(HDF5.HDF5File [, rng::MersenneTwister; group="GLOBAL_RNG"])
 
-Saves the current state of Julia's random generator (`Base.Random.GLOBAL_RNG`) to HDF5.
+Saves the current state of Julia's random generator (`Random.GLOBAL_RNG`) to HDF5.
 """
-function saverng(f::HDF5.HDF5File, rng::MersenneTwister=Base.Random.GLOBAL_RNG; group::String="GLOBAL_RNG")
+function saverng(f::HDF5.HDF5File, rng::MersenneTwister=Random.GLOBAL_RNG; group::String="GLOBAL_RNG")
   g = endswith(group, "/") ? group : group * "/"
   try
     if HDF5.exists(f, g)
       HDF5.o_delete(f, g)
     end
 
-    f[g*"idx"] = rng.idx
+    f[g*"idxF"] = rng.idxF
+    f[g*"idxI"] = rng.idxI
     f[g*"state_val"] = rng.state.val
     f[g*"vals"] = rng.vals
     f[g*"seed"] = rng.seed
+    f[g*"ints"] = Int.(rng.ints)
   catch e
     error("Error while saving RNG state: ", e)
   end
   nothing
 end
-function saverng(filename::String, rng::MersenneTwister=Base.Random.GLOBAL_RNG; group::String="GLOBAL_RNG")
+function saverng(filename::String, rng::MersenneTwister=Random.GLOBAL_RNG; group::String="GLOBAL_RNG")
   mode = isfile(filename) ? "r+" : "w"
   HDF5.h5open(filename, mode) do f
     saverng(f, rng; group=group)
@@ -114,10 +116,12 @@ function loadrng(f::HDF5.HDF5File; group::String="GLOBAL_RNG")::MersenneTwister
   rng = MersenneTwister(0)
   g = endswith(group, "/") ? group : group * "/"
   try
-    rng.idx = read(f[g*"idx"])
-    rng.state = Base.dSFMT.DSFMT_state(read(f[g*"state_val"]))
+    rng.idxI = read(f[g*"idxI"])
+    rng.idxF = read(f[g*"idxF"])
+    rng.state = Random.DSFMT.DSFMT_state(read(f[g*"state_val"]))
     rng.vals = read(f[g*"vals"])
     rng.seed = read(f[g*"seed"])
+    rng.ints = UInt128.(read(f[g*"ints"]))
   catch e
     error("Error while restoring RNG state: ", e)
   end
@@ -134,7 +138,7 @@ export loadrng
   restorerng(filename [; group="GLOBAL_RNG"]) -> Void
   restorerng(f::HDF5.HDF5File [; group="GLOBAL_RNG"]) -> Void
 
-Restores a state of Julia's random generator (`Base.Random.GLOBAL_RNG`) from HDF5.
+Restores a state of Julia's random generator (`Random.GLOBAL_RNG`) from HDF5.
 """
 function restorerng(filename::String; group::String="GLOBAL_RNG")
   HDF5.h5open(filename, "r") do f
@@ -180,16 +184,3 @@ function has(filename::AbstractString, name::AbstractString)
     return HDF5.has(f.plain, name)
   end
 end
-
-
-"""
-    fileext(filepath::AbstractString)
-
-Extracts lowercase file extension from given filepath.
-Extension is defined as "everything after the last dot".
-"""
-function fileext(filepath::AbstractString)
-    filename = basename(filepath)
-    return lowercase(filename[end-search(reverse(filename), '.')+2:end])
-end
-export fileext

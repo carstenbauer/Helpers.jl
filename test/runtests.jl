@@ -1,5 +1,5 @@
 using Helpers
-using Base.Test
+using Test, SparseArrays, LinearAlgebra
 
 @testset "Generic" begin
     M = rand(10,10)
@@ -50,7 +50,7 @@ end
     A = reshape(1:9,3,3)
     B = reshape(11:19,3,3)
     @test comm(A,B) == [60 -30 -120; 90 0 -90; 120 30 -60]
-    @test docommute(diagm(rand(100)), diagm(rand(100)))
+    @test docommute(diagm(0 => rand(100)), diagm(0 => rand(100)))
     @test !docommute(rand(100,100), rand(100,100))
 
     @test meshgrid(1:3,2:4) == ([1 2 3; 1 2 3; 1 2 3], [2 2 2; 3 3 3; 4 4 4])
