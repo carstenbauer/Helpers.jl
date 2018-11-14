@@ -9,7 +9,7 @@
 [appveyor-img]: https://img.shields.io/appveyor/ci/crstnbr/helpers-jl/master.svg?label=Windows
 [codecov-img]: https://img.shields.io/codecov/c/github/crstnbr/Helpers.jl/master.svg?label=codecov
 
-```
+```julia
 using Pkg
 Pkg.add("https://github.com/crstnbr/Helpers.jl")
 using Helpers
