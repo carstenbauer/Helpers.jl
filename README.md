@@ -5,7 +5,7 @@
 [![appveyor][appveyor-img]](https://ci.appveyor.com/project/crstnbr/helpers-jl/branch/master)
 [![codecov][codecov-img]](http://codecov.io/github/crstnbr/Helpers.jl?branch=master)
 
-[travis-img]: https://img.shields.io/travis/crstnbr/Helpers.jl/master.svg?label=Linux+/+macOS
+[travis-img]: https://img.shields.io/travis/crstnbr/Helpers.jl/master.svg?label=Linux
 [appveyor-img]: https://img.shields.io/appveyor/ci/crstnbr/helpers-jl/master.svg?label=Windows
 [codecov-img]: https://img.shields.io/codecov/c/github/crstnbr/Helpers.jl/master.svg?label=codecov
 
