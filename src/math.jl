@@ -2,12 +2,10 @@
     sparsity(A)
 
 Calculates the sparsity of the given array.
-The sparsity is defined as number of zero-valued elements divided by
+The sparsity is the number of zero-valued elements over the
 total number of elements.
 """
-function sparsity(A::AbstractArray{T}) where T<:Number
-  (length(A)-count(!iszero, A))/length(A)
-end
+sparsity(A::AbstractArray{<:Number}) = count(iszero, A)/length(A)
 export sparsity
 
 """
