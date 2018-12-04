@@ -67,3 +67,26 @@ macro def(name, definition)
     end
 end
 export @def
+
+
+"""
+  merge_project_tomls(out, A, B)
+
+Merge two Project.toml files `A` and `B` into `out` (overwriting `out`).
+"""
+function merge_project_tomls(out, A, B)
+    a = readdlm(A)
+    b = readdlm(B)
+    pa = Dict{String, String}((a[i,1], a[i,3]) for i in axes(a, 1))
+    pb = Dict{String, String}((b[i,1], b[i,3]) for i in axes(b, 1))
+    p = sort(merge(pa, pb))
+
+    s = "[deps]\n"
+    for (k, v) in p
+        k == "[deps]" && continue
+        s = join((s, k, " = ", "\"", v, "\"", "\n"))
+    end
+    write(out, s)
+    nothing
+end
+export merge_project_tomls
