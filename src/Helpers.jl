@@ -1,11 +1,7 @@
-"""
-**Helpers** is a collection of useful functions missing in base Julia.
-GitHub Repository: [crstnbr/Helpers.jl](http://julialang.org/)
-"""
 module Helpers
 
 #stdlibs
-using Random, Printf, Statistics, SparseArrays
+using Random, Printf, Statistics, SparseArrays, LinearAlgebra
 
 #external pkgs
 import HDF5
@@ -15,5 +11,6 @@ include("general.jl")
 include("math.jl")
 include("hdf5.jl")
 include("profiling.jl")
+include("combined_variance.jl")
 
 end # module

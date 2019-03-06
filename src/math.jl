@@ -111,42 +111,6 @@ function docommute(A::AbstractArray{T}, B::AbstractArray{S}) where T<:Number whe
 end
 export docommute
 
-"""
-    meshgrid(xvec) = meshgrid(xvec, xvec)
-
-Produces a 2D meshgrid `X,X` by repeating xvec in y-dimension and xvec in x-dimension.
-"""
-meshgrid(v::AbstractVector{T}) where T<:Number = meshgrid(v, v)
-
-"""
-    meshgrid(xvec, yvec)
-
-Produces a 2D meshgrid `X,Y` by repeating xvec in y-dimension and yvec in x-dimension.
-"""
-function meshgrid(vx::AbstractVector{T}, vy::AbstractVector{S}) where T<:Number where S<:Number
-    m, n = length(vy), length(vx)
-    vx = reshape(vx, 1, n)
-    vy = reshape(vy, m, 1)
-    (repeat(vx, m, 1), repeat(vy, 1, n))
-end
-
-"""
-    meshgrid(xvec, yvec, yvec)
-
-Produces a 3D meshgrid `X,Y,Z` by repeating the input vectors.
-"""
-function meshgrid(vx::AbstractVector{T}, vy::AbstractVector{S}, vz::AbstractVector{R}) where T<:Number where S<:Number where R<:Number
-    m, n, o = length(vy), length(vx), length(vz)
-    vx = reshape(vx, 1, n, 1)
-    vy = reshape(vy, m, 1, 1)
-    vz = reshape(vz, 1, 1, o)
-    om = ones(Int, m)
-    on = ones(Int, n)
-    oo = ones(Int, o)
-    (vx[om, :, oo], vy[:, on, oo], vz[om, on, :])
-end
-export meshgrid
-
 
 # import PyCall: PyObject
 # PYCALL_LOADED = false
