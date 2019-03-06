@@ -7,16 +7,16 @@
 
 Calculates the combined mean and variance of the concatenated sample `vcat(xs...)`.
 """
-function combined_mean_and_var(xstuple::AbstractVector{<:Number}...)
-    # Could perhaps be accelerated by using @generated functions and producing
-    # explicit (hand written) formulas?
+function combined_mean_and_var(xstuple::AbstractVector{T}...) where T
     xs = collect(xstuple)
     ns = length.(xs)
     μs = mean.(xs)
     vs = var.(xs)
     return combined_mean_and_var(ns, μs, vs)
 end
+
 export combined_mean_and_var
+
 
 
 
@@ -35,6 +35,32 @@ function combined_mean_and_var(ns::AbstractVector{<:Integer},
     nsum = sum(ns)
     meanc = dot(ns, μs) / nsum
     varc = sum((ns .- 1) .* vs + ns .* abs2.(μs .- meanc)) / (nsum - 1)
+    return meanc, varc
+end
+
+
+function combined_mean_and_var(ns::AbstractVector{<:Integer},
+                               μs::AbstractVector{<:AbstractArray{<:Number}},
+                               vs::AbstractVector{<:AbstractArray{<:Number}})
+    meanc = zero(μs[1])
+    varc = zero(vs[1])
+
+    nsum = sum(ns)
+    N = length(μs) # number of samples
+    for i in eachindex(meanc)
+
+        for k in 1:N
+            meanc[i] += ns[k] * μs[k][i]
+        end
+        meanc[i] = meanc[i] / nsum
+
+
+        for k in 1:N
+            varc[i] += (ns[k] - 1) * vs[k][i] + ns[k] * abs2(μs[k][i] - meanc[i])
+        end
+        varc[i] = varc[i] / (nsum - 1)
+    end
+
     return meanc, varc
 end
 
