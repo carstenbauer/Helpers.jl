@@ -69,7 +69,7 @@ function h5repack(src::String, trg::String)
 end
 function h5repack(filename::String)
     h5repack(filename, "tmp.h5")
-    mv("tmp.h5",filename,remove_destination=true)
+    mv("tmp.h5",filename,force=true)
 end
 export h5repack
 
