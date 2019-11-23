@@ -1,8 +1,7 @@
 # Helpers
 
 [![](https://img.shields.io/badge/docs-latest-blue.svg)](https://crstnbr.github.io/Helpers.jl/latest)
-[![travis][travis-img]](https://travis-ci.org/crstnbr/Helpers.jl)
-[![appveyor][appveyor-img]](https://ci.appveyor.com/project/crstnbr/helpers-jl/branch/master)
+[![github-ci](https://github.com/crstnbr/Helpers.jl/workflows/Run%20tests/badge.svg)](https://github.com/crstnbr/Helpers.jl/actions?query=workflow%3A%22Run+tests%22)
 [![codecov][codecov-img]](http://codecov.io/github/crstnbr/Helpers.jl?branch=master)
 
 [travis-img]: https://img.shields.io/travis/crstnbr/Helpers.jl/master.svg?label=Linux
